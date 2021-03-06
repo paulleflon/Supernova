@@ -1,0 +1,57 @@
+@font-face {
+	font-family: 'Score';
+	src: url(../fonts/Score.ttf);
+}
+
+@font-face {
+	font-family: 'Main';
+	src: url(../fonts/Main.otf);
+}
+
+html, body {
+	overflow: hidden;
+	height: 100%;
+	margin: 0;
+}
+
+#intro {
+	z-index: 1000;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+#intro #btn-in {
+	font: 100pt 'Main';
+	color: #fff;
+	animation: bounce .5s ease infinite alternate;
+}
+
+.game-section {
+	width: 100%;
+	height: 100%;
+	display: none;
+}
+
+.game-section.displayed {
+	display: block;
+}
+@keyframes slideIn {
+	from {
+		transform: translateY(-100px);
+		opacity: 0;
+	}
+}
+
+@keyframes bounce {
+	to {
+		transform: scale(1.1);
+	}
+}

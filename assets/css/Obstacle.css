@@ -1,0 +1,13 @@
+.Obstacle {
+	z-index: 1;
+	animation: rotation 5s linear infinite;
+}
+.Obstacle.hit {
+	animation: none;
+}
+
+@keyframes rotation {
+	to {
+		transform: rotate(-360deg);
+	}
+}

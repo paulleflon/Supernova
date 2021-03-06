@@ -1,0 +1,44 @@
+#stats {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background: url(../img/sprites/default/background.png) center center / cover;
+}
+
+#stats-title {
+	font: 40pt 'Main';
+	color: #fff;
+}
+
+#stats-container {
+	box-sizing: border-box;
+	width: 90%;
+	height: 60%;
+	padding: 10px;
+	background: #e6e6e6;
+	border: 4px solid #c7c7c7;
+	border-radius: 3px;
+	opacity: .8;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-content: space-around;
+}
+
+#stats-container .stat {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-grow: 1;
+}
+
+#stats-container .stat .stat-title {
+	font: 14pt 'Main';	
+}
+
+#stats-container .stat .stat-value {
+	font: 32pt 'Score';
+
+}

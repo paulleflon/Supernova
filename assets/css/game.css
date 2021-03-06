@@ -1,0 +1,98 @@
+#game-background {
+	position: absolute;
+	width: 150%;
+	height: 150%;
+	top: -25%;
+	left: -25%;
+	background-image: url(../img/sprites/default/background.png);
+	background-position-y: center;
+	animation: bg-scroll  15s linear infinite;
+}
+
+#scores {
+	z-index: 2;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	font: 50pt 'Score';
+	color: #fff;
+	animation: slideIn 2s ease;
+}
+
+#scores #highscore {
+	font-size: 25pt;
+	opacity: .5;
+}
+
+#scores.hidden {
+	transform: translateY(-100%);
+	opacity: 0;
+	transition: .3s ease-in;
+}
+
+#endgame-screen {
+	z-index: 3;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -60%);
+	opacity: 0;
+	color: #fff;
+	text-align: center;
+	transition: 1s ease;
+}
+#endgame-screen.displayed {
+	transform: translate(-50%, -50%);
+	opacity: 1;
+}
+#endgame-screen #endgame-title {
+	font: 140pt 'Main';
+	margin-bottom: -50px;
+}
+#endgame-screen #endgame-score {
+	position: relative;
+	font: 70pt 'Score';
+}
+
+#endgame-screen #endgame-score #endgame-newrecord {
+	position: absolute;
+	top: 15px;
+	left: 45%;
+	transform: rotate(15deg);
+	font: 12pt 'Main';
+	color: red;
+	display: none;
+	animation: newrecord .25s ease infinite alternate;
+}
+#endgame-screen #endgame-score #endgame-newrecord.displayed {
+	display: block;
+}
+
+#endgame-screen #endgame-menu {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 500px;
+	margin: 30px auto;
+}
+
+#endgame-screen #endgame-menu .endgame-menu-btn {
+	font-size: 20pt;
+	margin: 0;
+	padding: 0 10px;
+}
+
+
+@keyframes bg-scroll {
+	to {
+		background-position-x: -1920px;
+	}
+}
+
+@keyframes newrecord {
+	to {
+		transform: rotate(15deg) scale(1.2);
+	}
+}

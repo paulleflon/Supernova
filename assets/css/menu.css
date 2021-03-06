@@ -1,0 +1,56 @@
+.game-section#main-menu #menu-background {
+	z-index: -1;
+	position: absolute;
+	width: 150%;
+	height: 150%;
+	top: -25%;
+	left: -25%;
+	background: url(../img/sprites/default/background.png) center center / cover;
+}
+
+.game-section#main-menu #menu-contents {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.game-section#main-menu #menu-contents #menu-audio {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 50px;
+	height: 50px;
+	background: url(../img/volume-on.png) center center / contain no-repeat;
+	cursor: pointer;
+}
+.game-section#main-menu #menu-contents #menu-audio.muted {
+	background-image: url(../img/volume-off.png)
+}
+
+
+.game-section#main-menu #menu-title {
+	top: 10px;
+	font: 100pt 'Main';
+	color: #fff;
+	text-shadow: 0px 0px 5px #fff;
+}
+
+.menu-item {
+	font: 40pt 'Main';
+	text-align: center;
+	background: #555;
+	border: 4px solid #777;
+	color: #fff;
+	text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5);
+	border-radius: 10px;
+	margin: 30px 0;
+	padding: 0px 100px;
+	cursor: pointer;
+	transition: transform .3s ease;
+}
+
+.menu-item:hover,
+.menu-item.focused {
+	transform: scale(1.1);
+}

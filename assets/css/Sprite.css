@@ -1,0 +1,12 @@
+.Sprite {
+	position: fixed;
+	object-fit: contain;
+	pointer-events: none;
+}
+.SpriteHitboxIndicator {
+	z-index: 5;
+	box-sizing: border-box;
+	position: fixed;
+	background: rgba(255, 0, 0, 0.5);
+	border: 3px dashed red;
+}

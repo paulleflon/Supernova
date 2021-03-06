@@ -1,0 +1,41 @@
+.Player {
+	z-index: 3;
+	transition: filter .2s ease, transform .2s ease;
+}
+
+.Player.in {
+	animation: playerIn 1s ease;
+}
+
+.Player.move-up {
+	transform: rotate(-20deg);
+}
+.Player.accelerated.move-up {
+	animation: disco .3s linear infinite;
+	transform: rotate(-40deg);
+}
+
+.Player.move-down {
+	transform: rotate(20deg);
+}
+.Player.accelerated.move-down {
+	animation: disco .3s linear infinite;
+	transform: rotate(40deg);
+}
+
+.Player.move-up.move-down {
+	transform: rotate(0deg);
+	animation: none;
+}
+
+@keyframes playerIn {
+	from {
+		left: -100px;
+	}
+}
+
+@keyframes disco {
+	to {
+		filter: hue-rotate(360deg);
+	}
+}
