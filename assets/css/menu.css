@@ -1,3 +1,9 @@
+.game-section#main-menu.displayed {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .game-section#main-menu #menu-background {
 	z-index: -1;
 	position: absolute;
@@ -15,8 +21,8 @@
 	align-items: center;
 }
 
-.game-section#main-menu #menu-contents #menu-audio {
-	position: absolute;
+.game-section#main-menu #menu-audio {
+	position: fixed;
 	top: 10px;
 	right: 10px;
 	width: 50px;
@@ -24,7 +30,7 @@
 	background: url(../img/volume-on.png) center center / contain no-repeat;
 	cursor: pointer;
 }
-.game-section#main-menu #menu-contents #menu-audio.muted {
+.game-section#main-menu #menu-audio.muted {
 	background-image: url(../img/volume-off.png)
 }
 
@@ -50,7 +56,6 @@
 	transition: transform .3s ease;
 }
 
-.menu-item:hover,
-.menu-item.focused {
+.menu-item:hover {
 	transform: scale(1.1);
 }

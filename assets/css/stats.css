@@ -1,9 +1,11 @@
 #stats {
-	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	background: url(../img/sprites/default/background.png) center center / cover;
+}
+#stats.displayed {
+	display: flex;
 }
 
 #stats-title {
@@ -35,7 +37,7 @@
 }
 
 #stats-container .stat .stat-title {
-	font: 14pt 'Main';	
+	font: 14pt 'Stats';	
 }
 
 #stats-container .stat .stat-value {

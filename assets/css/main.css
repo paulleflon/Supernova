@@ -1,11 +1,16 @@
-@font-face {
+@font-face { /* Nova Mono */
 	font-family: 'Score';
 	src: url(../fonts/Score.ttf);
 }
 
-@font-face {
+@font-face { /* Wicked Mouse */
 	font-family: 'Main';
 	src: url(../fonts/Main.otf);
+}
+
+@font-face { /* Komika Axis */
+	font-family: 'Stats';
+	src: url(../fonts/Stats.ttf);
 }
 
 html, body {

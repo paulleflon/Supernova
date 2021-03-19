@@ -1,63 +1,55 @@
 const menu = getId('main-menu');
 const bg = getId('menu-background');
 const contents = getId('menu-contents');
+
 /* Effet de parallaxe */
 menu.addEventListener('mousemove', e => {
+	const PARALLAX_SMOOTHNESS = 100;
 	const x = e.clientX;
 	const y = e.clientY;
 	const w = menu.clientWidth;
 	const h = menu.clientWidth;
-	const diffX = (x - w / 2) / 50;
-	const diffY = (y - h / 2) / 50;
-	bg.style.transform = `translate(${diffX}px, ${diffY}px)`;
-	contents.style.transform = `translate(${diffX / 4}px, ${diffY / 4}px)`;
+	// L'expression entre parenthèses calcule la position du curseur relative au centre de l'écran
+	// La diviser sert à adoucir l'effet de parallaxe, plus le diviseur est grand, plus l'effet est discret
+	const diffX = (x - w / 2) / PARALLAX_SMOOTHNESS;
+	const diffY = (y - h / 2) / PARALLAX_SMOOTHNESS;
+	contents.style.transform = `translate(${diffX}px, ${diffY}px)`;
+	// On divise par 2 pour que l'arrière-plan bouge plus lentement que le premier-plan et ainsi
+	// Créer un effet de parallaxe 
+	bg.style.transform = `translate(${diffX / 2}px, ${diffY / 2}px)`;
 });
-/* Navigation au clavier */
+
+
+/* Navigation */
+// document#querySelectorAll retourne un objet NodeListOf sur lequel .forEach ne fonctionne pas
+// Array#from permet donc de convertir ce NodeListOf donné en Array sur lequel on peut utiliser .forEach
 const menuItems = Array.from(document.querySelectorAll('#main-menu #menu-items .menu-item'));
-let selectedMenuItem = null;
 menuItems.forEach(elm => {
-	elm.addEventListener('mouseenter', e => {
+	elm.addEventListener('mouseenter', () => {
 		playSound('menuclick');
 	});
-	elm.addEventListener('mouseleave', e => {
-		elm.classList.remove('focused');
-		selectedMenuItem = null;
-	})
-	elm.addEventListener('click', e => {
+	elm.addEventListener('click', () => {
 		menuAction(elm.getAttribute('menu-action'));
 	});
-})
-menu.addEventListener('keydown', e => {
-	if (e.key === 'Enter') {
-		if (selectedMenuItem === null)
-			return;
-		const selected = menuItems[selectedMenuItem];
-		menuAction(selected.getAttribute('menu-action'));
-	}
-
-	const increment = e.key === 'ArrowUp' ? -1 : e.key === 'ArrowDown' ? 1 : null;
-	if (!increment)
-		return;
-	playSound('menuclick');
-	if (selectedMenuItem === null) {
-		selectedMenuItem = increment === 1 ? 0 : 2;
-	} else {
-		menuItems[selectedMenuItem].classList.remove('focused');
-		selectedMenuItem += increment;
-		if (selectedMenuItem > 2)
-			selectedMenuItem = 0;
-		if (selectedMenuItem < 0)
-			selectedMenuItem = 2;
-	}
-	menuItems[selectedMenuItem].classList.add('focused');
 });
+
 function displayMenu() {
 	gameoverBgm.pause();
 	mainBgm.currentTime = 0;
 	mainBgm.play();
 	switchSection('main-menu');
+	if (parseInt(localStorage.getItem('stat.totalScore')) >= 100000) {
+		getId('menu-background').style.backgroundImage = `url(./assets/img/enorme.png)`;
+		getId('menu-title').style.color = '#000';
+		getId('menu-title').style.textShadow = '0px 0px 5px #000';
+		getId('menu-audio').style.filter = 'invert(1)';
+	}
 }
 
+/**
+ * Réalise une action proposée par le menu
+ * @param {string} action L'action à réaliser
+ */
 function menuAction(action) {
 	switch (action) {
 		case 'play':

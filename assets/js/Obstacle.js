@@ -1,9 +1,17 @@
+/**
+ * Un obstacle (Météorite par défaut) dans la partie
+ */
 class Obstacle extends Sprite {
+	/**
+	 * @param {string} skin Le skin à appliquer sur l'obstacle
+	 * @param {number} speed La vitesse de l'obstacle
+	 * @param {HTMLElement} parent L'élément DOM dans lequel afficher l'Obstacle
+	 */
 	constructor(skin, speed, parent) {
 		super({
 			width: 100,
 			height: 100,
-			src: `assets/img/sprites/${skin}/meteorite_1.png`,
+			src: `assets/img/sprites/${skin}/obstacle.png`,
 			hitbox: {
 				width: 70,
 				height: 70,
@@ -11,7 +19,7 @@ class Obstacle extends Sprite {
 			},
 			x: parent.offsetWidth,
 			y: Math.floor(Math.random() * (parent.offsetHeight - 100)),
-		})
+		});
 		this.parent = parent;
 		this.speed = speed;
 		this.load();
@@ -29,7 +37,7 @@ class Obstacle extends Sprite {
 
 	explode() {
 		this.img.classList.add('hit');
-		this.img.src = 'assets/img/sprites/boom.gif';
+		this.img.src = `assets/img/sprites/boom.gif?no-cache=${Math.random()}`;
 		if (localStorage.getItem('muted') === 'true')
 			return;
 		this.boom.currentTime = 0;

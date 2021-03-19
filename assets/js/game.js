@@ -1,5 +1,5 @@
-async function startGame(forceSwitch = true) {
-	/* Réinitialisation de l'affichage */
+function resetDisplay() {
+	const skin = localStorage.getItem('selectedSkin') || 'animalcrossing';
 	const highscore = parseInt(localStorage.getItem('stat.highestScore'));
 	if (highscore)
 		getId('highscore').innerText = highscore;
@@ -7,21 +7,27 @@ async function startGame(forceSwitch = true) {
 		getId('highscore').innerText = '';
 	getId('scores').classList.remove('hidden');
 	getId('endgame-screen').classList.remove('displayed');
-	if (forceSwitch) {
-		switchSection('game');
-	}
-	/* Lancement de la bonne musique */
-	gameoverBgm.pause();
-	mainBgm.pause();
-	gameBgm.currentTime = 0;
-	gameBgm.play();
-	/* Initialisation de la partie */
-	const skin = localStorage.getItem('selectedSkin') || 'default';
-	const gameContainer = getId('game');
+	getId('game').style.background = `url(assets/img/sprites/${skin}/background.png) center center / cover`;
+
+}
+
+/**
+ * EventListener dédié au calcul du temps durant lequel la touche Shift a été pressée
+ * @param {KeyboardEvent} e L'événement clavier 
+ */
+function shiftTimeHandler(e) {
+	if (e.type === 'keydown' && e.key === 'Shift')
+		this.lastShiftPress = Date.now();
+	if (e.type === 'keyup' && e.key === 'Shift' && this.lastShiftPress)
+		this.stats.speedTime += Date.now() - this.lastShiftPress;
+};
+
+function initGame() {
+	const skin = localStorage.getItem('selectedSkin') || 'animalcrossing';
 	const game = {
 		lastShiftPress: null,
 		obstacles: [],
-		player: new Player(skin, gameContainer),
+		player: new Player(skin, getId('game')),
 		score: 0,
 		skin,
 		speed: 10,
@@ -33,27 +39,36 @@ async function startGame(forceSwitch = true) {
 			obstaclesCount: 0,
 			missedCoins: 0
 		},
-	}
+	};
 	game.player.display();
-
-
-	function shiftTimeHandler(e) {
-		if (e.type === 'keydown' && e.key === 'Shift')
-			game.lastShiftPress = Date.now();
-		if (e.type === 'keyup' && e.key === 'Shift' && game.lastShiftPress)
-			game.stats.speedTime += Date.now() - game.lastShiftPress;
-	}
+	shiftTimeHandler.bind(game);
 	document.body.addEventListener('keydown', shiftTimeHandler, true);
 	document.body.addEventListener('keyup', shiftTimeHandler, true);
+	return game;
+}
+
+async function startGame(forceSwitch = true) {
+	/* Réinitialisation de l'affichage */
+	resetDisplay();
+	if (forceSwitch)
+		switchSection('game');
+
+	/* Lancement de la bonne musique */
+	gameoverBgm.pause();
+	mainBgm.pause();
+	gameBgm.currentTime = 0;
+	gameBgm.play();
+	/* Initialisation de la partie */
+	const game = initGame();
 
 	let frameCount = 0;
 	let obstacleRate = 30;
 	game.loop = setInterval(function () {
-		if (++frameCount % 5 === 0) {
+		if (++frameCount % 5 === 0)
 			getId('currentscore').innerText = ++game.score;
-		}
+
 		if (frameCount % obstacleRate === 0) {
-			game.obstacles.push(new Obstacle(skin, game.speed, gameContainer));
+			game.obstacles.push(new Obstacle(game.skin, game.speed, getId('game')));
 			game.obstacles[game.obstacles.length - 1].display();
 			game.stats.obstaclesCount += 1;
 			game.speed += 0.05;
@@ -97,15 +112,12 @@ function lose(game) {
 			return;
 		}
 		const removed = game.obstacles.shift();
-		removed.img.classList.add('hit');
-		removed.img.src = `assets/img/sprites/boom.gif?no-cache${Math.random()}`;
-		setTimeout(() => removed.remove(), 1000);
+		removed.explode();
 	}, 100);
 
 	getId('scores').classList.add('hidden');
 	document.querySelector('#endgame-score span').innerText = game.score;
 	const best = parseInt(localStorage.getItem('stat.highestScore')) || 0;
-	console.log(best);
 	if (game.score > best)
 		getId('endgame-newrecord').classList.add('displayed');
 	else

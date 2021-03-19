@@ -1,4 +1,3 @@
-// Sans accent à cause de la police qui ne les a pas
 const statNames = {
 	'highestScore': 'Meilleur score',
 	'worstScore': 'Pire score',
@@ -7,12 +6,13 @@ const statNames = {
 	'shortestGame': 'Partie la plus courte',
 	'longuestGame': 'Partie la plus longue',
 	'gamesCount': 'Nombre de parties',
-	'arrowsPressed': 'Nombre de fleches pressees',
-	'speedTime': 'Temps passe en acceleration',
-	'obstaclesCount': 'Nombre d\'obstacles croises',
-	'coinCount': 'Nombre de pieces ramassees',
-	'missedCoins': 'Nombre de pieces ratees',
+	'arrowsPressed': 'Nombre de flèches pressées',
+	'speedTime': 'Temps passé en accélération',
+	'obstaclesCount': 'Nombre d\'obstacles croisés',
+	'coinCount': 'Nombre de pièces ramassées',
+	'missedCoins': 'Nombre de pièces ratées',
 }
+// Ces stats seront affichées en étant mises en forme avec formatDuration (lib.js)
 const timeStats = ['gameTime', 'shortestGame', 'longuestGame', 'speedTime'];
 
 

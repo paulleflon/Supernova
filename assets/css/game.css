@@ -1,12 +1,5 @@
-#game-background {
-	position: absolute;
-	width: 150%;
-	height: 150%;
-	top: -25%;
-	left: -25%;
-	background-image: url(../img/sprites/default/background.png);
-	background-position-y: center;
-	animation: bg-scroll  15s linear infinite;
+#game {
+	background: url() center center / cover;
 }
 
 #scores {

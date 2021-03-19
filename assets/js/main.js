@@ -10,15 +10,15 @@ const muted = localStorage.getItem('muted') === 'true';
 mainBgm.muted = gameBgm.muted = gameoverBgm.muted = muted;
 if (muted)
 	audioBtn.classList.add('muted');
-
-getId('intro').addEventListener('click', () => {
-	displayMenu();
-	// displayStats();
-	getId('intro').remove();
-});
 audioBtn.addEventListener('click', () => {
 	const muted = !(localStorage.getItem('muted') === 'true');
 	mainBgm.muted = gameBgm.muted = gameoverBgm.muted = muted;
 	audioBtn.classList.toggle('muted');
 	localStorage.setItem('muted', muted);
-})
+});
+// Ce bouton sert à forcer une première interaction entre l'utilisateur et la page avant de lancer le jeu
+// Ceci permet d'éviter que le navigateur ne bloque les sons dans le menu (https://goo.gl/xX8pDD)
+getId('intro').addEventListener('click', () => {
+	displayMenu();
+	getId('intro').remove();
+});
