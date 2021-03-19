@@ -62,6 +62,10 @@ function formatDuration(ms) {
 	seconds -= hours * 3600;
 	const minutes = Math.floor(seconds / 60);
 	seconds -= minutes * 60;
-	return `${zero(hours, 4)}:${zero(minutes, 2)}:${zero(seconds, 2)}`;
+	let str = '';
+	if (hours > 0)
+		str += `${zero(hours, 4)}:`;
+	str += `${zero(minutes, 2)}:${zero(seconds, 2)}`;
+	return str;
 }
 
