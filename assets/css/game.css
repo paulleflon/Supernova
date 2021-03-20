@@ -25,6 +25,23 @@
 	transition: .3s ease-in;
 }
 
+#scores #coins {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	display: flex;
+	align-items: center;
+}
+
+#scores #coins #coin-icon {
+	position: relative;
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	margin-right: 10px;
+	background: url(../img/sprites/default/coin_1.png) center center / contain no-repeat;
+}
+
 #endgame-screen {
 	z-index: 3;
 	position: fixed;

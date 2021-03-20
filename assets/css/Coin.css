@@ -1,0 +1,8 @@
+.Coin {
+	filter: drop-shadow(0px 5px 5px #fff);
+}
+
+.Coin.fadeOut {
+	transition: .3s;
+	opacity: 0;
+}

@@ -18,7 +18,7 @@ class Player extends Sprite {
 			src: `assets/img/sprites/${skin}/player.png`,
 			x: 20,
 			y,
-			debug: true
+			debug: false
 		});
 
 		this.parent = parent;

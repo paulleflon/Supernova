@@ -15,7 +15,10 @@ const statNames = {
 // Ces stats seront affichées en étant mises en forme avec formatDuration (lib.js)
 const timeStats = ['gameTime', 'shortestGame', 'longuestGame', 'speedTime'];
 
-
+/**
+ * Met à jour les statistiques
+ * @param {object} data Les données de la partie jouée 
+ */
 function updateStats(data) {
 	const current = loadStats();
 	const duration = Date.now() - data.start;
@@ -33,6 +36,8 @@ function updateStats(data) {
 	current.arrowsPressed += data.stats.arrowsPressed;
 	current.speedTime += data.stats.speedTime;
 	current.obstaclesCount += data.stats.obstaclesCount;
+	current.coinCount += data.stats.coinCount;
+	current.missedCoins += data.stats.missedCoins;
 	for (const s in statNames) {
 		localStorage.setItem(`stat.${s}`, current[s].toString());
 	}
@@ -50,13 +55,14 @@ function displayStats() {
 	}
 	const stats = loadStats();
 	const statsContainer = getId('stats-container');
+	statsContainer.innerHTML = '';
 	for (s in statNames) {
 		const elm = document.createElement('div');
 		elm.className = 'stat';
 		let content;
 		if (timeStats.includes(s))
 			content = formatDuration(stats[s]);
-		else 
+		else
 			content = stats[s];
 		elm.innerHTML = `<div class='stat-title'>${statNames[s]}</div><div class='stat-value'>${content}</div>`;
 		statsContainer.appendChild(elm);
@@ -64,6 +70,10 @@ function displayStats() {
 	switchSection('stats');
 }
 
+/**
+ * Charge les statistiques à partir du localStorage
+ * @returns {Record<string, number>} Les statistiques mappées par leurs id 
+ */
 function loadStats() {
 	const obj = {};
 	for (const s in statNames) {

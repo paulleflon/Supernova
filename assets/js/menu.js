@@ -59,7 +59,7 @@ function menuAction(action) {
 			displayStats();
 			break;
 		case 'inventory':
-			// switchSection('inventory');
+			switchSection('inventory');
 			break;
 	}
 }

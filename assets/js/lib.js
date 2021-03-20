@@ -54,7 +54,7 @@ function sleep(ms) {
 /**
  * Met en forme une durée en un format lisible
  * @param {number} ms La durée à mettre en forme, en millisecondes
- * @returns {string}La durée mise en forme
+ * @returns {string} La durée mise en forme
  */
 function formatDuration(ms) {
 	let seconds = Math.floor(ms / 1000);

@@ -15,11 +15,13 @@
 	<link href="assets/css/Sprite.css" rel="stylesheet" />
 	<link href="assets/css/Player.css" rel="stylesheet" />
 	<link href="assets/css/Obstacle.css" rel="stylesheet" />
+	<link href="assets/css/Coin.css" rel="stylesheet" />
 
 	<!-- JAVASCRIPT -->
 	<script src="assets/js/Sprite.js"></script>
 	<script src="assets/js/Player.js"></script>
 	<script src="assets/js/Obstacle.js"></script>
+	<script src="assets/js/Coin.js"></script>
 	<script src="assets/js/lib.js"></script>
 	<script src="assets/js/stats.js"></script>
 	<script src="assets/js/game.js"></script>
@@ -38,7 +40,7 @@
 			<div id="menu-title">SuperNova</div>
 			<div id="menu-items">
 				<div class="menu-item" menu-action="play">Jouer</div>
-				<div class="menu-item" menu-action="Inventory">Inventaire</div>
+				<div class="menu-item" menu-action="inventory">Inventaire</div>
 				<div class="menu-item" menu-action="stats">Stats</div>
 			</div>
 		</div>
@@ -55,6 +57,10 @@
 		<div id="scores">
 			<div id="currentscore"></div>
 			<div id="highscore"></div>
+			<div id="coins">
+				<div id="coin-icon"></div>
+				<div id="coins-count">000</div>
+			</div>
 		</div>
 		<div id="endgame-screen">
 			<div id="endgame-title">Perdu</div>

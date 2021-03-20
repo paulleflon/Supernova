@@ -42,7 +42,7 @@ class Obstacle extends Sprite {
 			return;
 		this.boom.currentTime = 0;
 		this.boom.play();
-		setTimeout(() => this.remove(), 1000);
+		setTimeout(() => this.img.remove(), 1000);
 	}
 
 
