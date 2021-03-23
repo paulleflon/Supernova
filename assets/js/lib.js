@@ -31,6 +31,8 @@ function getId(id) {
  */
 function switchSection(id) {
 	const displayed = document.querySelector('.game-section.displayed');
+	if (displayed && displayed.id === id)
+		return;
 	getId(id).classList.add('displayed');
 	if (displayed)
 		displayed.classList.remove('displayed');

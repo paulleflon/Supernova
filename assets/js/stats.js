@@ -17,27 +17,27 @@ const timeStats = ['gameTime', 'shortestGame', 'longuestGame', 'speedTime'];
 
 /**
  * Met à jour les statistiques
- * @param {object} data Les données de la partie jouée 
+ * @param {Game} game Les données de la partie jouée 
  */
-function updateStats(data) {
+function updateStats(game) {
 	const current = loadStats();
-	const duration = Date.now() - data.start;
-	if (data.score > current.highestScore)
-		current.highestScore = data.score;
-	else if (data.score < current.worstScore || current.worstScore === 0)
-		current.worstScore = data.score;
-	current.totalScore += data.score;
+	const duration = Date.now() - game.startedAt;
+	if (game.score > current.highestScore)
+		current.highestScore = game.score;
+	else if (game.score < current.worstScore || current.worstScore === 0)
+		current.worstScore = game.score;
+	current.totalScore += game.score;
 	if (duration > current.longuestGame)
 		current.longuestGame = duration;
 	else if (duration < current.shortestGame || current.shortestGame === 0)
 		current.shortestGame = duration;
 	current.gameTime += duration;
 	current.gamesCount++;
-	current.arrowsPressed += data.stats.arrowsPressed;
-	current.speedTime += data.stats.speedTime;
-	current.obstaclesCount += data.stats.obstaclesCount;
-	current.coinCount += data.stats.coinCount;
-	current.missedCoins += data.stats.missedCoins;
+	current.arrowsPressed += game.stats.arrowsPressed;
+	current.speedTime += game.stats.speedTime;
+	current.obstaclesCount += game.stats.obstaclesCount;
+	current.coinCount += game.stats.coinCount;
+	current.missedCoins += game.stats.missedCoins;
 	for (const s in statNames) {
 		localStorage.setItem(`stat.${s}`, current[s].toString());
 	}

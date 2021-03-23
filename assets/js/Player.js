@@ -1,10 +1,13 @@
+/**
+ * Représente un personnage jouable
+ * @class
+ */
 class Player extends Sprite {
 	/**
 	 * @param {string} skin 
 	 * @param {HTMLDivElement} parent 
 	 */
 	constructor(skin, parent) {
-		const y = parent.offsetHeight / 2 - 50;
 		super({
 			id: 'player',
 			height: 100,
@@ -17,7 +20,7 @@ class Player extends Sprite {
 			},
 			src: `assets/img/sprites/${skin}/player.png`,
 			x: 20,
-			y,
+			y: 0,
 			debug: false
 		});
 
@@ -51,6 +54,7 @@ class Player extends Sprite {
 	}
 
 	display() {
+		this.y = this.parent.offsetHeight / 2 - 50;
 		this.img.classList.add('in');
 		setTimeout(() => this.img.classList.remove('in'), 1000);
 		document.body.addEventListener('keydown', this.keyPressHandler, true);

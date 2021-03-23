@@ -23,7 +23,7 @@ class AudioManager {
 	 * @param {string} name Le nom de la musique à jouer
 	 */
 	playMusic(name) {
-
+		
 	}
 
 }

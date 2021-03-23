@@ -1,5 +1,6 @@
 /**
  * Un obstacle (Météorite par défaut) dans la partie
+ * @class
  */
 class Obstacle extends Sprite {
 	/**

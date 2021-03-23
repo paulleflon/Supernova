@@ -1,182 +1,311 @@
-function resetDisplay() {
-	const skin = localStorage.getItem('selectedSkin') || 'default';
-	const highscore = parseInt(localStorage.getItem('stat.highestScore'));
-	if (highscore)
-		getId('highscore').innerText = highscore;
-	else
-		getId('highscore').innerText = '';
-
-	getId('game').style.background = `url(assets/img/sprites/${skin}/background.png) center center / cover`;
-	getId('coin-icon').style.backgroundImage = `url(assets/img/sprites/${skin}/coin_1.png)`;
-	getId('coins-count').innerText = '000';
-	getId('scores').classList.remove('hidden');
-	getId('endgame-screen').classList.remove('displayed');
-
-}
-
 /**
- * EventListener dédié au calcul du temps durant lequel la touche Shift a été pressée
- * @param {KeyboardEvent} e L'événement clavier 
+ * Représente les données d'une partie de Supernova
  */
-function shiftTimeHandler(e) {
-	if (e.type === 'keydown' && e.key === 'Shift')
-		this.lastShiftPress = Date.now();
-	if (e.type === 'keyup' && e.key === 'Shift' && this.lastShiftPress)
-		this.stats.speedTime += Date.now() - this.lastShiftPress;
-};
+class Game {
+	/**
+	 * @param {string} skin Le skin à utiliser pendant cette partie
+	 */
+	constructor(skin) {
+		/**
+		  * Tableau contenant les pièces affichées dans la partie
+		  * @type {Coin[]}
+		  */
+		this.coins = [];
 
-function initGame() {
-	const skin = localStorage.getItem('selectedSkin') || 'default';
-	const container = getId('game');
-	const game = {
-		container,
-		lastShiftPress: null,
-		obstacles: [],
-		coins: [],
-		player: new Player(skin, container),
-		score: 0,
-		skin,
-		speed: 10,
-		start: Date.now(),
-		stats: {
-			arrowsPressed: 0,
-			speedTime: 0,
-			coinCount: 0,
-			obstaclesCount: 0,
-			missedCoins: 0
-		},
-	};
-	game.player.display();
-	document.body.addEventListener('keydown', (e) => shiftTimeHandler.call(game, e), true);
-	document.body.addEventListener('keyup', (e) => shiftTimeHandler.call(game, e), true);
-	return game;
-}
+		/**
+		 * L'élément DOM dans lequel la partie est affichée
+		 * @type {HTMLElement}
+		 */
+		this.container = getId('game');
 
-async function startGame(forceSwitch = true) {
-	/* Réinitialisation de l'affichage */
-	resetDisplay();
-	if (forceSwitch)
+		/**
+		 * Le timestamp de la dernière pression sur la touche Shift. 
+		 * 
+		 * Sert à calculer la stat `speedTime` (Temps passé en accélération)
+		 * @type {?number}
+		 */
+		this.lastShiftPress = null;
+
+		/**
+		 * Boucle (setInterval) de la partie
+		 * @type {number}
+		 */
+		// Le type est number car la fonction setInterval retourne un nombre, l'ID de l'interval
+		// Cet ID sert à stoppper l'interval avec clearInterval
+		this.loop = undefined;
+
+		/**
+		 * Tableau contenant les obstacles affichés dans la partie
+		 * @type {Obstacle[]}
+		 */
+		this.obstacles = [];
+
+		/**
+		 * Représente le personnage jouable durant la partie
+		 * @type {Player}
+		 */
+		this.player = new Player(skin, this.container);
+
+		/**
+		 * Le score atteint
+		 * @type {number}
+		 */
+		this.score = 0;
+
+		/**
+		 * Le skin utilisé dans cette partie
+		 * @type {string}
+		 */
+		this.skin = skin;
+
+		/**
+		 * La vitesse des obstacles à l'écran
+		 * @type {number}
+		 */
+		this.speed = 10;
+
+		/**
+		 * Timestamp correspondant au moment où la partie a commencé.
+		 * 
+		 * Sert à calculer la stat `gameTime` (Temps de jeu)
+		 * @type {number}
+		 */
+		this.startedAt = Date.now();
+
+		/**
+		 * Les statistiques de cette partie
+		 * @type {GameStats}
+		 */
+		this.stats = new GameStats();
+	}
+
+	/**
+	 * Réinitialise les valeurs affichées dans le container de la partie 
+	 */
+	resetDisplay() {
+		const highscore = parseInt(localStorage.getItem('stat.highestScore'));
+		if (highscore)
+			getId('highscore').innerText = highscore;
+		else
+			getId('highscore').innerText = '';
+
+		this.container.style.background = `url(assets/img/sprites/${this.skin}/background.png) center center / cover`;
+		getId('coin-icon').style.backgroundImage = `url(assets/img/sprites/${this.skin}/coin_1.png)`;
+		getId('coins-count').innerText = '000';
+		getId('scores').classList.remove('hidden');
+		getId('endgame-screen').classList.remove('displayed');
 		switchSection('game');
+	}
 
-	/* Lancement de la bonne musique */
-	//// NEED REFACTOR: AudioManager
-	gameoverBgm.pause();
-	mainBgm.pause();
-	gameBgm.currentTime = 0;
-	gameBgm.play();
-	/* Initialisation de la partie */
-	const game = initGame();
+	/**
+	 * EventListener dédié au calcul du temps durant lequel la touche Shift a été pressée
+	 * @param {KeyboardEvent} e L'événement clavier 
+	 */
+	shiftTimeHandler(e) {
+		if (e.type === 'keydown' && e.key === 'Shift')
+			this.lastShiftPress = Date.now();
+		if (e.type === 'keyup' && e.key === 'Shift' && this.lastShiftPress)
+			this.stats.speedTime += Date.now() - this.lastShiftPress;
+	}
 
-	let frameCount = 0;
-	let obstacleRate = 30;
-	game.loop = setInterval(function () {
-		if (++frameCount % 5 === 0)
-			getId('currentscore').innerText = ++game.score;
+	/**
+	 * Lance une partie de Supernova
+	 */
+	start() {
+		this.resetDisplay();
+		/* Lancement de la bonne musique */
+		//// NEED REFACTOR: AudioManager
+		gameoverBgm.pause();
+		mainBgm.pause();
+		gameBgm.currentTime = 0;
+		gameBgm.play();
 
-		if (frameCount % obstacleRate === 0) {
-			game.obstacles.push(new Obstacle(game.skin, game.speed, game.container));
-			game.obstacles[game.obstacles.length - 1].display();
-			game.stats.obstaclesCount += 1;
-			game.speed += 0.05;
-		}
-		if (frameCount % 500 === 0 && obstacleRate > 3)
-			obstacleRate -= 3;
+		this.player.display();
+		// Function.call permet d'appeler une fonction en précisant la valeur de son `this` puis les arguments à lui passer
+		// Lorsqu'une fonction est utilisée pour gérer un événement, le this est remplacé par l'élément dans lequel l'événenemt s'est produit
+		// (Ici, l'object `document`). L'usage de call nous permet donc de remplacer le this par notre instance de Game. 
+		document.body.addEventListener('keydown', (e) => this.shiftTimeHandler.call(this, e), true);
+		document.body.addEventListener('keyup', (e) => this.shiftTimeHandler.call(this, e), true);
 
-		if (frameCount % 50 === 0) {
-			game.coins.push(new Coin(game.skin, game.container));
-			game.coins[game.coins.length - 1].display(game.container);
-		}
+		let frameCount = 0;
+		let obstacleRate = 30;
+		this.loop = setInterval(() => {
+			if (++frameCount % 5 === 0)
+				getId('currentscore').innerText = ++this.score;
 
-		game.player.update();
-		updateObstacles(game);
-		updateCoins(game);
-	}, 16);
+			if (frameCount % obstacleRate === 0) {
+				const obstacle = new Obstacle(this.skin, this.speed, this.container);
+				this.obstacles.push(obstacle);
+				obstacle.display();
+				this.stats.obstaclesCount += 1;
+				this.speed += 0.05;
+			}
+			if (frameCount % 500 === 0 && obstacleRate > 3)
+				obstacleRate -= 3;
 
-}
+			if (frameCount % 50 === 0) {
+				const coin = new Coin(this.skin, this.container);
+				this.coins.push(coin);
+				coin.display(this.container);
+			}
+			this.player.update();
+			this.updateObstacles();
+			this.updateCoins();
+		}, 16);
+	}
 
-/**
- * Met à jour l'état des pièces 
- * @param {object} game Les données de la partie
- */
-function updateCoins(game) {
-	game.coins.forEach((coin, index) => {
-		coin.update();
-		if (coin.testCollision(game.player)) {
-			coin.img.remove();
-			getId('coins-count').innerText = zero(++game.stats.coinCount, 3);
-			game.coins.splice(index, 1);
-		}
-		if (coin.x + coin.width < 0) {
-			coin.img.remove();
-			game.stats.missedCoins++;
-			game.coins.shift();
-		}
-	});
-}
 
-function updateObstacles(game) {
-	game.obstacles.forEach((obstacle, index) => {
-		obstacle.update();
-		if (obstacle.x + obstacle.width < 0) {
-			obstacle.remove();
-			game.obstacles.shift();
-		}
-		if (obstacle.testCollision(game.player)) {
-			game.obstacles.splice(index, 1);
-			obstacle.explode();
-			document.body.removeEventListener('keydown', shiftTimeHandler, true);
-			document.body.removeEventListener('keyup', shiftTimeHandler, true);
-			lose(game);
-		}
-	});
-}
-
-function lose(game) {
-	clearInterval(game.loop);
-	game.player.fall();
-	game.stats.arrowsPressed = game.player.arrowsPressed;
-	const obstaclesMovement = setInterval(function () {
-		game.obstacles.forEach(obstacle => {
-			obstacle.update();
+	/**
+	 * Met à jour l'état des pièces 
+	 */
+	updateCoins() {
+		this.coins.forEach((coin, index) => {
+			coin.update();
+			if (coin.testCollision(this.player)) {
+				coin.img.remove();
+				getId('coins-count').innerText = zero(++this.stats.coinCount, 3);
+				this.coins.splice(index, 1);
+			}
+			if (coin.x + coin.width < 0) {
+				coin.img.remove();
+				this.stats.missedCoins++;
+				// Array#shift supprime le premier élément de la liste
+				// La première pièce de la liste est celle arrivée le plus tôt dans la liste
+				// Ainsi, c'est aussi la première à sortir de l'écran
+				// Donc on n'a pas besoin de spécifier l'index de l'élément à supprimer de la liste
+				// On sait que c'est le premier
+				this.coins.shift();
+			}
 		});
-	}, 16);
-	const clearObstaclesInterval = setInterval(function () {
-		if (game.obstacles.length === 0) {
-			clearInterval(obstaclesMovement);
-			clearInterval(clearObstaclesInterval);
-			getId('endgame-screen').classList.add('displayed');
-			return;
-		}
-		const removed = game.obstacles.shift();
-		removed.explode();
-	}, 100);
-	game.coins.forEach(coin => {
-		coin.img.classList.add('fadeOut');
-		setTimeout(() => coin.img.remove(), 300);
-	});
-	getId('scores').classList.add('hidden');
-	document.querySelector('#endgame-score span').innerText = game.score;
-	const best = parseInt(localStorage.getItem('stat.highestScore')) || 0;
-	if (game.score > best)
-		getId('endgame-newrecord').classList.add('displayed');
-	else
-		getId('endgame-newrecord').classList.remove('displayed');
+	}
 
-	setTimeout(() => getId('endgame-screen').classList.add('displayed'), 1000);
-	function endgameMenuHandler(e) {
-		if (e.type === 'click') {
+	/**
+	 * Met à jour l'état des obstacles 
+	 */
+	updateObstacles() {
+		this.obstacles.forEach((obstacle, index) => {
+			obstacle.update();
+			if (obstacle.x + obstacle.width < 0) {
+				obstacle.remove();
+				// Même logique que pour les pièces
+				this.obstacles.shift();
+			}
+			if (obstacle.testCollision(this.player)) {
+				this.obstacles.splice(index, 1);
+				obstacle.explode();
+				this.lose();
+			}
+		});
+	}
+
+	lose() {
+		clearInterval(this.loop);
+		document.body.removeEventListener('keydown', this.shiftTimeHandler, true);
+		document.body.removeEventListener('keyup', this.shiftTimeHandler, true);
+		this.player.fall();
+		this.stats.arrowsPressed = this.player.arrowsPressed;
+
+		// Cet interval sert à faire perdurer le mouvement des obstacles même si la boucle de jeu principale s'est arrêtée
+		// On peut ainsi les faire exploser chacun périodiquement pour un meilleur effet visuel
+		const obstaclesMovement = setInterval(() => {
+			this.obstacles.forEach(obstacle => {
+				obstacle.update();
+			});
+		}, 16);
+		// Cet interval justement sert à faire  exploser les obstacles restants toutes les 100ms
+		const clearObstaclesInterval = setInterval(() => {
+			if (this.obstacles.length === 0) {
+				// Quand on a fait exploser tous les obstacles, on peut arrêter les deux boucles et afficher l'écran de fin de partie
+				clearInterval(obstaclesMovement);
+				clearInterval(clearObstaclesInterval);
+				getId('endgame-screen').classList.add('displayed');
+				return;
+			}
+			const removed = this.obstacles.shift();
+			removed.explode();
+		}, 100);
+
+		this.coins.forEach(coin => {
+			// On anime un fondu sur chaque pièce restante pendant que les obstacles explosent
+			// L'animation dure 300ms, on attend cette durée avant de supprimer la pièce du DOM
+			coin.img.classList.add('fadeOut');
+			setTimeout(() => coin.img.remove(), 300);
+		});
+		// Le score en partie prend 300ms à quitter l'écran (Transition CSS, game.css)
+		// On attend 1 seconde pour afficher l'écran de fin de partie, pour laisser le temps aux obstacles restants d'exploser
+		getId('scores').classList.add('hidden');
+		setTimeout(() => getId('endgame-screen').classList.add('displayed'), 1000);
+		// On modifie les valeurs de l'écran de fin de partie qui sera affiché dans 1 seconde
+		document.querySelector('#endgame-score span').innerText = this.score;
+		const best = parseInt(localStorage.getItem('stat.highestScore')) || 0;
+		if (this.score > best)
+			getId('endgame-newrecord').classList.add('displayed');
+		else
+			getId('endgame-newrecord').classList.remove('displayed');
+
+		// On stocke l'EventListener dans une variable pour pouvoir l'annuler par la suite
+		// Dans une fonction fléchée pour conserver le `this` relatif à notre instance de `Game`
+		const endgameMenuHandler = (e) => {
 			if (e.target.id === 'play')
-				startGame(false);
+				new Game(this.skin).start();
 			else if (e.target.id === 'menu')
 				displayMenu();
-			else return;
+			else
+				return;
+			// Si on arrive ici, l'un des deux boutons a été pressé
+			// Car sinon, on a appelé return et l'exécution de la fonction s'est arrêtée pour ce clic
+			// On peut donc supprimer l'événement
 			document.removeEventListener('click', endgameMenuHandler, true);
-			document.removeEventListener('keydown', endgameMenuHandler, true);
 		}
+		// On applique l'EventListener
+		document.addEventListener('click', endgameMenuHandler, true);
+		updateStats(this);
+		gameBgm.pause();
+		gameoverBgm.currentTime = 0;
+		gameoverBgm.play();
 	}
-	document.addEventListener('click', endgameMenuHandler, true);
-	updateStats(game);
-	gameBgm.pause();
-	gameoverBgm.currentTime = 0;
-	gameoverBgm.play();
+
+}
+
+// Il est préférable de n'avoir qu'un classe par fichier
+// Mais cette classe n'étant utilisée que par la classe `Game`
+// On se permet de la laisser ici pour ne pas s'encombrer d'un fichier
+// Le fichier stats.js servant lui à charger/sauvegarder/afficher les stats globales du jeu
+
+/**
+ * Représente les statistiques d'une partie de Supernova
+ * @class
+ */
+class GameStats {
+	constructor() {
+		/**
+		 * Nombre de pressions sur les touches flèches du clavier durant la partie
+		 * @type {number}
+		 */
+		this.arrowsPress = 0;
+
+		/**
+		 * Temps passé en accélération (avec la touche Shift pressée)
+		 * @type {number}
+		 */
+		this.speedTime = 0;
+
+		/**
+		 * Nombre de pièces ramassées durant la partie
+		 * @type {number}
+		 */
+		this.coinCount = 0;
+
+		/**
+		 * Nombre d'obstacles croisés durant la partie
+		 * @type {number}
+		 */
+		this.obstaclesCount = 0;
+
+		/**
+		 * Nombre de pièces ratées durant la partie
+		 * @type {number}
+		 */
+		this.missedCoins = 0;
+	}
 }

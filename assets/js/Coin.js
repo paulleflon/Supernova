@@ -1,3 +1,7 @@
+/**
+ * Représente une pièce collectible 
+ * @class
+ */
 class Coin extends Sprite {
 	constructor(skin, parent) {
 		super({
