@@ -34,6 +34,7 @@ class AudioManager {
 		Object.keys(paths.musics).forEach(key => {
 			const audio = new Audio(paths.musics[key]);
 			audio.loop = true;
+			audio.muted = this.disabled;
 			this.musics.set(key, audio);
 		});
 		Object.keys(paths.sounds).forEach(key => {
@@ -49,7 +50,7 @@ class AudioManager {
 	toggle() {
 		this.disabled = !this.disabled;
 		localStorage.setItem('muted', this.disabled.toString());
-		this.musics.forEach(audio => audio.volume = (this.disabled) ? 0 : 1);
+		this.musics.forEach(audio => audio.muted = this.disabled);
 	}
 
 	/**
