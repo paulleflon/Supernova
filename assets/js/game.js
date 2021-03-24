@@ -116,13 +116,7 @@ class Game {
 	 */
 	start() {
 		this.resetDisplay();
-		/* Lancement de la bonne musique */
-		//// NEED REFACTOR: AudioManager
-		gameoverBgm.pause();
-		mainBgm.pause();
-		gameBgm.currentTime = 0;
-		gameBgm.play();
-
+		GameAudio.playMusic('game');
 		this.player.display();
 		// Function.call permet d'appeler une fonction en précisant la valeur de son `this` puis les arguments à lui passer
 		// Lorsqu'une fonction est utilisée pour gérer un événement, le this est remplacé par l'élément dans lequel l'événement s'est produit
@@ -263,9 +257,7 @@ class Game {
 		// On applique l'EventListener
 		document.addEventListener('click', endgameMenuHandler, true);
 		updateStats(this);
-		gameBgm.pause();
-		gameoverBgm.currentTime = 0;
-		gameoverBgm.play();
+		GameAudio.playMusic('over');
 	}
 
 }

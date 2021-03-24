@@ -24,7 +24,6 @@ class Obstacle extends Sprite {
 		this.parent = parent;
 		this.speed = speed;
 		this.load();
-		this.boom = new Audio(`assets/audio/explosion.wav`);
 	}
 
 	display() {
@@ -41,8 +40,7 @@ class Obstacle extends Sprite {
 		this.img.src = `assets/img/sprites/boom.gif?no-cache=${Math.random()}`;
 		if (localStorage.getItem('muted') === 'true')
 			return;
-		this.boom.currentTime = 0;
-		this.boom.play();
+		GameAudio.playSound('boom');
 		setTimeout(() => this.img.remove(), 1000);
 	}
 

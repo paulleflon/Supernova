@@ -19,6 +19,15 @@ menu.addEventListener('mousemove', e => {
 	bg.style.transform = `translate(${diffX / 2}px, ${diffY / 2}px)`;
 });
 
+/* Audio Toggle */
+const audioBtn = getId('menu-audio');
+if (GameAudio.disabled)
+	audioBtn.classList.add('muted');
+
+audioBtn.addEventListener('click', () => {
+	GameAudio.toggle();
+	audioBtn.classList.toggle('muted');
+});
 
 /* Navigation */
 // document#querySelectorAll retourne un objet NodeListOf sur lequel .forEach ne fonctionne pas
@@ -26,7 +35,7 @@ menu.addEventListener('mousemove', e => {
 const menuItems = Array.from(document.querySelectorAll('#main-menu #menu-items .menu-item'));
 menuItems.forEach(elm => {
 	elm.addEventListener('mouseenter', () => {
-		playSound('menuclick');
+		GameAudio.playSound('click');
 	});
 	elm.addEventListener('click', () => {
 		menuAction(elm.getAttribute('menu-action'));
@@ -34,10 +43,11 @@ menuItems.forEach(elm => {
 });
 
 function displayMenu() {
-	gameoverBgm.pause();
-	mainBgm.currentTime = 0;
-	mainBgm.play();
+	GameAudio.playMusic('main');
 	switchSection('main-menu');
+	// Si le joueur a accumulé plus de 100 000 poins au total dans le jeu,
+	// Il débloque un fond de menu spécial, on doit adapter le style des éléments de menu
+	// Pour qu'ils restent visibles malgré la couleur de fond
 	if (parseInt(localStorage.getItem('stat.totalScore')) >= 100000) {
 		getId('menu-background').style.backgroundImage = `url(./assets/img/enorme.png)`;
 		getId('menu-title').style.color = '#000';
