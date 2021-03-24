@@ -92,9 +92,12 @@ class Game {
 		this.container.style.background = `url(assets/img/sprites/${this.skin}/background.png) center center / cover`;
 		getId('coin-icon').style.backgroundImage = `url(assets/img/sprites/${this.skin}/coin_1.png)`;
 		getId('coins-count').innerText = '000';
-		getId('scores').classList.remove('hidden');
 		getId('endgame-screen').classList.remove('displayed');
 		switchSection('game');
+		// Pour que la transition (fondu/glissemnt) s'affiche correctement, on doit retirer la classe hidden 
+		// Après l'affichage de la section game. Le timeout, même avec une durée "nulle" le permet
+		// Sans ce timeout, les scores s'affichent sans transition
+		setTimeout(() => getId('scores').classList.remove('hidden'), 0);
 	}
 
 	/**
@@ -122,7 +125,7 @@ class Game {
 
 		this.player.display();
 		// Function.call permet d'appeler une fonction en précisant la valeur de son `this` puis les arguments à lui passer
-		// Lorsqu'une fonction est utilisée pour gérer un événement, le this est remplacé par l'élément dans lequel l'événenemt s'est produit
+		// Lorsqu'une fonction est utilisée pour gérer un événement, le this est remplacé par l'élément dans lequel l'événement s'est produit
 		// (Ici, l'object `document`). L'usage de call nous permet donc de remplacer le this par notre instance de Game. 
 		document.body.addEventListener('keydown', (e) => this.shiftTimeHandler.call(this, e), true);
 		document.body.addEventListener('keyup', (e) => this.shiftTimeHandler.call(this, e), true);

@@ -11,7 +11,7 @@
 	text-align: center;
 	font: 50pt 'Score';
 	color: #fff;
-	animation: slideIn 2s ease;
+	transition: .3s ease-in;
 }
 
 #scores #highscore {
@@ -22,7 +22,6 @@
 #scores.hidden {
 	transform: translateY(-100%);
 	opacity: 0;
-	transition: .3s ease-in;
 }
 
 #scores #coins {
