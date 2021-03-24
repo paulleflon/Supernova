@@ -48,11 +48,6 @@ function updateStats(game) {
  * Affiche les statistiques dans la section `stats`
  */
 function displayStats() {
-	gameoverBgm.pause();
-	if (mainBgm.paused) {
-		mainBgm.currentTime = 0;
-		mainBgm.play();
-	}
 	const stats = loadStats();
 	const statsContainer = getId('stats-container');
 	statsContainer.innerHTML = '';

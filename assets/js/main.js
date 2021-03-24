@@ -1,10 +1,3 @@
-const mainBgm = new Audio('assets/music/main-bgm.mp3');
-mainBgm.loop = true;
-const gameBgm = new Audio('assets/music/game-bgm.mp3');
-gameBgm.loop = true;
-const gameoverBgm = new Audio('assets/music/gameover.mp3');
-gameoverBgm.loop = true;
-
 const GameAudio = new AudioManager({
 	musics: {
 		main: 'assets/music/main-bgm.mp3',
