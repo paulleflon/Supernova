@@ -70,4 +70,3 @@ function formatDuration(ms) {
 	str += `${zero(minutes, 2)}:${zero(seconds, 2)}`;
 	return str;
 }
-

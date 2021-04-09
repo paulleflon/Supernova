@@ -1,79 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<!-- META -->
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>927</title>
 
-<head>
-	<!-- META -->
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>927</title>
+		<!-- CSS -->
+		<link href="assets/css/main.css" rel="stylesheet" />
+		<link href="assets/css/menu.css" rel="stylesheet" />
+		<link href="assets/css/inventory.css" rel="stylesheet" />
+		<link href="assets/css/stats.css" rel="stylesheet" />
+		<link href="assets/css/game.css" rel="stylesheet" />
+		<link href="assets/css/Sprite.css" rel="stylesheet" />
+		<link href="assets/css/Player.css" rel="stylesheet" />
+		<link href="assets/css/Obstacle.css" rel="stylesheet" />
+		<link href="assets/css/Coin.css" rel="stylesheet" />
 
-	<!-- CSS -->
-	<link href="assets/css/main.css" rel="stylesheet" />
-	<link href="assets/css/menu.css" rel="stylesheet" />
-	<link href="assets/css/stats.css" rel="stylesheet" />
-	<link href="assets/css/game.css" rel="stylesheet" />
-	<link href="assets/css/Sprite.css" rel="stylesheet" />
-	<link href="assets/css/Player.css" rel="stylesheet" />
-	<link href="assets/css/Obstacle.css" rel="stylesheet" />
-	<link href="assets/css/Coin.css" rel="stylesheet" />
+		<!-- JAVASCRIPT -->
+		<script src="assets/js/lib.js"></script>
+		<script src="assets/js/AudioManager.js"></script>
+		<script src="assets/js/Sprite.js"></script>
+		<script src="assets/js/Player.js"></script>
+		<script src="assets/js/Obstacle.js"></script>
+		<script src="assets/js/Coin.js"></script>
+		<script src="assets/js/Game.js"></script>
+		<script src="assets/js/stats.js"></script>
+		<script src="assets/js/main.js" defer></script>
+		<script src="assets/js/menu.js" defer></script>
+	</head>
 
-	<!-- JAVASCRIPT -->
-	<script src="assets/js/lib.js"></script>
-	<script src="assets/js/AudioManager.js"></script>
-	<script src="assets/js/Sprite.js"></script>
-	<script src="assets/js/Player.js"></script>
-	<script src="assets/js/Obstacle.js"></script>
-	<script src="assets/js/Coin.js"></script>
-	<script src="assets/js/Game.js"></script>
-	<script src="assets/js/stats.js"></script>
-	<script src="assets/js/main.js" defer></script>
-	<script src="assets/js/menu.js" defer></script>
-</head>
-
-<body>
-	<div id="intro">
-		<div id="btn-in">Lancer</div>
-	</div>
-	<div class="game-section" id="main-menu" tabindex="0">
-		<div id="menu-audio"></div>
-		<div id="menu-background"></div>
-		<div id="menu-contents">
-			<div id="menu-title">SuperNova</div>
-			<div id="menu-items">
-				<div class="menu-item" menu-action="play">Jouer</div>
-				<div class="menu-item" menu-action="inventory">Inventaire</div>
-				<div class="menu-item" menu-action="stats">Stats</div>
+	<body>
+		<div id="intro">
+			<div id="btn-in">Lancer</div>
+		</div>
+		<div class="game-section" id="main-menu" tabindex="0">
+			<div id="menu-audio"></div>
+			<div id="menu-background"></div>
+			<div id="menu-contents">
+				<div id="menu-title">SuperNova</div>
+				<div id="menu-items">
+					<div class="menu-item" menu-action="play">Jouer</div>
+					<div class="menu-item" menu-action="inventory">
+						Inventaire
+					</div>
+					<div class="menu-item" menu-action="stats">Stats</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="game-section" id="inventory">
-		insérer inventaire
-	</div>
-	<div class="game-section" id="stats">
-		<div id="stats-exit-btn" onclick="switchSection('main-menu')"></div>
-		<div id="stats-title">Statistiques</div>
-		<div id="stats-container"></div>
-	</div>
-	<div class="game-section" id="game">
-		<div id="scores" class="hidden">
-			<div id="currentscore"></div>
-			<div id="highscore"></div>
-			<div id="coins">
-				<div id="coin-icon"></div>
-				<div id="coins-count">000</div>
+		<div class="game-section" id="inventory">
+			<div id="inventory-title">Inventaire</div>
+			<div class="inventory-tile" id="default">
+				<div class="skin-character-showcase"></div>
+				<div class="skin-name">Skin de base</div>
+				<div class="skin-state"></div>
+				<div class="skin-cta"></div>
+			</div>
+			<div class="inventory-tile" id="animalcrosing">
+				<div class="skin-character-showcase"></div>
+				<div class="skin-name">Animal Crossing</div>
+				<div class="skin-desc">Incarnez K.K. et échappez aux vilaines dettes de Tom Nook !</div>
+				<div class="skin-state"></div>
+				<div class="skin-cta"></div>
 			</div>
 		</div>
-		<div id="endgame-screen">
-			<div id="endgame-title">Perdu</div>
-			<div id="endgame-score">
-				<span></span>
-				<div id="endgame-newrecord">Nouveau record</div>
+		<div class="game-section" id="stats">
+			<div id="stats-exit-btn" onclick="switchSection('main-menu')"></div>
+			<div id="stats-title">Statistiques</div>
+			<div id="stats-container"></div>
+		</div>
+		<div class="game-section" id="game">
+			<div id="scores" class="hidden">
+				<div id="currentscore"></div>
+				<div id="highscore"></div>
+				<div id="coins">
+					<div id="coin-icon"></div>
+					<div id="coins-count">000</div>
+				</div>
 			</div>
-			<div id="endgame-menu">
-				<div class="endgame-menu-btn menu-item" id="play">Rejouer</div>
-				<div class="endgame-menu-btn menu-item" id="menu">Menu principal</div>
+			<div id="endgame-screen">
+				<div id="endgame-title">Perdu</div>
+				<div id="endgame-score">
+					<span></span>
+					<div id="endgame-newrecord">Nouveau record</div>
+				</div>
+				<div id="endgame-menu">
+					<div class="endgame-menu-btn menu-item" id="play">
+						Rejouer
+					</div>
+					<div class="endgame-menu-btn menu-item" id="menu">
+						Menu principal
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-</body>
+	</body>
 </html>

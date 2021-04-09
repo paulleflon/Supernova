@@ -159,7 +159,7 @@ class Game {
 		this.coins.forEach((coin, index) => {
 			coin.update();
 			if (coin.testCollision(this.player)) {
-				coin.img.remove();
+				coin.take();
 				getId('coins-count').innerText = zero(++this.stats.coinCount, 3);
 				this.coins.splice(index, 1);
 			}
@@ -223,10 +223,10 @@ class Game {
 		}, 100);
 
 		this.coins.forEach(coin => {
-			// On anime un fondu sur chaque pièce restante pendant que les obstacles explosent
-			// L'animation dure 300ms, on attend cette durée avant de supprimer la pièce du DOM
-			coin.img.classList.add('fadeOut');
-			setTimeout(() => coin.img.remove(), 300);
+			// On anime une disparition sur chaque pièce restante pendant que les obstacles explosent
+			// L'animation dure 1500ms, on attend cette durée avant de supprimer la pièce du DOM
+			coin.img.classList.add('game-end-remove');
+			setTimeout(() => coin.img.remove(), 1500);
 		});
 		// Le score en partie prend 300ms à quitter l'écran (Transition CSS, game.css)
 		// On attend 1 seconde pour afficher l'écran de fin de partie, pour laisser le temps aux obstacles restants d'exploser

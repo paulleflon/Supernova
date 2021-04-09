@@ -22,4 +22,9 @@ class Coin extends Sprite {
 		this.x -= 10;
 		this.img.style.left = `${this.x}px`;
 	}
+
+	take() {
+		this.img.classList.add('taken');
+		setTimeout(() => this.img.remove(), 100);
+	}
 }
