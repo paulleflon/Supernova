@@ -3,6 +3,7 @@
 	object-fit: contain;
 	pointer-events: none;
 }
+
 .SpriteHitboxIndicator {
 	position: fixed;
 	z-index: 5;

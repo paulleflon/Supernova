@@ -1,6 +1,6 @@
 .Player {
 	z-index: 3;
-	transition: filter .2s ease, transform .2s ease;
+	transition: filter 0.2s ease, transform 0.2s ease;
 }
 
 .Player.in {
@@ -10,17 +10,19 @@
 .Player.move-up {
 	transform: rotate(-20deg);
 }
+
 .Player.accelerated.move-up {
 	transform: rotate(-40deg);
-	animation: disco .3s linear infinite;
+	animation: disco 0.3s linear infinite;
 }
 
 .Player.move-down {
 	transform: rotate(20deg);
 }
+
 .Player.accelerated.move-down {
 	transform: rotate(40deg);
-	animation: disco .3s linear infinite;
+	animation: disco 0.3s linear infinite;
 }
 
 .Player.move-up.move-down {

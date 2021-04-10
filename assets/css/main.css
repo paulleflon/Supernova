@@ -1,19 +1,23 @@
-@font-face { /* Nova Mono */
+@font-face {
+	/* Nova Mono */
 	font-family: 'Score';
 	src: url(../fonts/Score.ttf);
 }
 
-@font-face { /* Wicked Mouse */
+@font-face {
+	/* Wicked Mouse */
 	font-family: 'Main';
 	src: url(../fonts/Main.otf);
 }
 
-@font-face { /* Komika Axis */
+@font-face {
+	/* Komika Axis */
 	font-family: 'Stats';
 	src: url(../fonts/Stats.ttf);
 }
 
-html, body {
+html,
+body {
 	overflow: hidden;
 	margin: 0;
 	height: 100%;
@@ -34,7 +38,7 @@ html, body {
 }
 
 #intro #btn-in {
-	animation: bounce .5s ease infinite alternate;
+	animation: bounce 0.5s ease infinite alternate;
 	font: 100pt 'Main';
 	color: #fff;
 }
@@ -54,7 +58,6 @@ html, body {
 		transform: scale(1.1);
 	}
 }
-
 
 /* 
 boom: https://gifer.com/en/XCVT

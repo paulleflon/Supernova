@@ -7,7 +7,7 @@
 	z-index: 2;
 	top: 0;
 	left: 0;
-	transition: .3s ease-in;
+	transition: 0.3s ease-in;
 	width: 100%;
 	font: 50pt 'Score';
 	text-align: center;
@@ -15,7 +15,7 @@
 }
 
 #scores #highscore {
-	opacity: .5;
+	opacity: 0.5;
 	font-size: 25pt;
 }
 
@@ -38,7 +38,8 @@
 	margin-right: 10px;
 	width: 40px;
 	height: 40px;
-	background: url(../img/sprites/default/coin_1.png) center center / contain no-repeat;
+	background: url(../img/sprites/default/coin_1.png) center center / contain
+		no-repeat;
 }
 
 #endgame-screen {
@@ -52,14 +53,17 @@
 	text-align: center;
 	color: #fff;
 }
+
 #endgame-screen.displayed {
 	opacity: 1;
 	transform: translate(-50%, -50%);
 }
+
 #endgame-screen #endgame-title {
 	margin-bottom: -50px;
 	font: 140pt 'Main';
 }
+
 #endgame-screen #endgame-score {
 	position: relative;
 	font: 70pt 'Score';
@@ -71,10 +75,11 @@
 	left: 45%;
 	display: none;
 	transform: rotate(15deg);
-	animation: newrecord .25s ease infinite alternate;
+	animation: newrecord 0.25s ease infinite alternate;
 	font: 12pt 'Main';
 	color: red;
 }
+
 #endgame-screen #endgame-score #endgame-newrecord.displayed {
 	display: block;
 }
@@ -92,7 +97,6 @@
 	padding: 0 10px;
 	font-size: 20pt;
 }
-
 
 @keyframes bg-scroll {
 	to {

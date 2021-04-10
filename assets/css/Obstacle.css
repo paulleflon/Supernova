@@ -2,6 +2,7 @@
 	z-index: 1;
 	animation: rotation 5s linear infinite;
 }
+
 .Obstacle.hit {
 	animation: none;
 }

@@ -4,6 +4,7 @@
 	align-items: center;
 	background: url(../img/sprites/default/background.png) center center / cover;
 }
+
 #stats.displayed {
 	display: flex;
 }
@@ -36,9 +37,11 @@
 	transition: 0.1s ease;
 	padding: 0 10px;
 }
+
 #stats-container .stat:hover {
 	background: #00000050;
 }
+
 #stats-container .stat .stat-title {
 	font: 14pt 'Stats';
 }

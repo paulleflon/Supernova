@@ -4,7 +4,7 @@
 
 .Coin.taken {
 	opacity: 0;
-	transition: .1s ease;
+	transition: 0.1s ease;
 }
 
 .Coin.game-end-remove {
