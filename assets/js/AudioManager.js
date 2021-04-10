@@ -45,7 +45,6 @@ class AudioManager {
 
 	/**
 	 * Active/Désactive l'audio dans le jeu et sauvegarde ce paramètre dans le localStorage
-	 * @returns {boolean} Si l'audio est désactivé
 	 */
 	toggle() {
 		this.disabled = !this.disabled;
