@@ -1,5 +1,7 @@
 /**
  * Représente un Sprite dans le jeu
+ * @class
+ * @implements {spriteOptions}
  */
 class Sprite {
 	/**

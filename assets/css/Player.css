@@ -11,21 +11,21 @@
 	transform: rotate(-20deg);
 }
 .Player.accelerated.move-up {
-	animation: disco .3s linear infinite;
 	transform: rotate(-40deg);
+	animation: disco .3s linear infinite;
 }
 
 .Player.move-down {
 	transform: rotate(20deg);
 }
 .Player.accelerated.move-down {
-	animation: disco .3s linear infinite;
 	transform: rotate(40deg);
+	animation: disco .3s linear infinite;
 }
 
 .Player.move-up.move-down {
-	transform: rotate(0deg);
 	animation: none;
+	transform: rotate(0deg);
 }
 
 @keyframes playerIn {

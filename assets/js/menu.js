@@ -63,7 +63,7 @@ function displayMenu() {
 function menuAction(action) {
 	switch (action) {
 		case 'play':
-			const skin = localStorage.getItem('selectedSkin') || 'default';
+			const skin = localStorage.getItem('selectedskin') || 'default';
 			new Game(skin).start();
 			break;
 		case 'stats':

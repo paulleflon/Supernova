@@ -24,7 +24,10 @@
 		<script src="assets/js/Player.js"></script>
 		<script src="assets/js/Obstacle.js"></script>
 		<script src="assets/js/Coin.js"></script>
+		<script src="assets/js/GameStats.js"></script>
 		<script src="assets/js/Game.js"></script>
+		<script src="assets/js/InventoryTile.js"></script>
+		<script src="assets/js/inventory.js"></script>
 		<script src="assets/js/stats.js"></script>
 		<script src="assets/js/main.js" defer></script>
 		<script src="assets/js/menu.js" defer></script>
@@ -49,23 +52,16 @@
 			</div>
 		</div>
 		<div class="game-section" id="inventory">
+			<div class="exit-btn" onclick="switchSection('main-menu')"></div>
 			<div id="inventory-title">Inventaire</div>
-			<div class="inventory-tile" id="default">
-				<div class="skin-character-showcase"></div>
-				<div class="skin-name">Skin de base</div>
-				<div class="skin-state"></div>
-				<div class="skin-cta"></div>
+			<div id="inventory-balance">
+				<div id="inventory-balance-icon"></div>
+				<div id="inventory-balance-value"></div>
 			</div>
-			<div class="inventory-tile" id="animalcrosing">
-				<div class="skin-character-showcase"></div>
-				<div class="skin-name">Animal Crossing</div>
-				<div class="skin-desc">Incarnez K.K. et échappez aux vilaines dettes de Tom Nook !</div>
-				<div class="skin-state"></div>
-				<div class="skin-cta"></div>
-			</div>
+			<div id="inventory-tiles"></div>
 		</div>
 		<div class="game-section" id="stats">
-			<div id="stats-exit-btn" onclick="switchSection('main-menu')"></div>
+			<div class="exit-btn" onclick="switchSection('main-menu')"></div>
 			<div id="stats-title">Statistiques</div>
 			<div id="stats-container"></div>
 		</div>

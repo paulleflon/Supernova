@@ -3,11 +3,11 @@
 }
 
 .Coin.taken {
-	transition: .1s ease;
 	opacity: 0;
+	transition: .1s ease;
 }
 
 .Coin.game-end-remove {
-	transition: 1.5s ease-in;
 	transform: translateY(1500px) rotate(360deg);
+	transition: 1.5s ease-in;
 }

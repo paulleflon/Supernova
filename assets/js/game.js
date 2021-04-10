@@ -1,5 +1,6 @@
 /**
  * Représente les données d'une partie de Supernova
+ * @class
  */
 class Game {
 	/**
@@ -195,6 +196,9 @@ class Game {
 		});
 	}
 
+	/**
+	 * Met à jour l'affichage et les données de sauvegarde à la perte de la partie
+	 */
 	lose() {
 		clearInterval(this.loop);
 		document.body.removeEventListener('keydown', this.shiftTimeHandler, true);
@@ -257,50 +261,11 @@ class Game {
 		// On applique l'EventListener
 		document.addEventListener('click', endgameMenuHandler, true);
 		updateStats(this);
+		let balance = parseInt(localStorage.getItem('balance')) || 0;
+		balance += this.stats.coinCount;
+		getId('inventory-balance-value').innerText = zero(balance, 3);
+		localStorage.setItem('balance', balance.toString());
 		GameAudio.playMusic('over');
 	}
 
-}
-
-// Il est préférable de n'avoir qu'un classe par fichier
-// Mais cette classe n'étant utilisée que par la classe `Game`
-// On se permet de la laisser ici pour ne pas s'encombrer d'un fichier
-// Le fichier stats.js servant lui à charger/sauvegarder/afficher les stats globales du jeu
-
-/**
- * Représente les statistiques d'une partie de Supernova
- * @class
- */
-class GameStats {
-	constructor() {
-		/**
-		 * Nombre de pressions sur les touches flèches du clavier durant la partie
-		 * @type {number}
-		 */
-		this.arrowsPress = 0;
-
-		/**
-		 * Temps passé en accélération (avec la touche Shift pressée)
-		 * @type {number}
-		 */
-		this.speedTime = 0;
-
-		/**
-		 * Nombre de pièces ramassées durant la partie
-		 * @type {number}
-		 */
-		this.coinCount = 0;
-
-		/**
-		 * Nombre d'obstacles croisés durant la partie
-		 * @type {number}
-		 */
-		this.obstaclesCount = 0;
-
-		/**
-		 * Nombre de pièces ratées durant la partie
-		 * @type {number}
-		 */
-		this.missedCoins = 0;
-	}
 }

@@ -38,21 +38,6 @@ function switchSection(id) {
 		displayed.classList.remove('displayed');
 }
 
-function playSound(file) {
-	if (localStorage.getItem('muted') === 'true')
-		return;
-	const audio = new Audio(`assets/audio/${file}.wav`);
-	audio.play();
-}
-/**
- * Version async de setTimeout
- * @param {number} ms La durée de pause
- */
-function sleep(ms) {
-	// L'utilisation d'un Promise permet d'await sleep() au lieu d'utiliser le callback de setTimeout
-	// Ceci rend le code plus lisible et évite le callback hell
-	return new Promise(resolve => setTimeout(resolve, ms));
-}
 /**
  * Met en forme une durée en un format lisible
  * @param {number} ms La durée à mettre en forme, en millisecondes
@@ -65,6 +50,8 @@ function formatDuration(ms) {
 	const minutes = Math.floor(seconds / 60);
 	seconds -= minutes * 60;
 	let str = '';
+	// On affiche les heures uniquement si elles sont supérieures à 0
+	// Par contre on affiche toujours les minutes et secondes peu importe leurs valeurs
 	if (hours > 0)
 		str += `${zero(hours, 4)}:`;
 	str += `${zero(minutes, 2)}:${zero(seconds, 2)}`;

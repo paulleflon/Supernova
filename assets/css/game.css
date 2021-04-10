@@ -3,62 +3,62 @@
 }
 
 #scores {
-	z-index: 2;
 	position: fixed;
+	z-index: 2;
 	top: 0;
 	left: 0;
-	width: 100%;
-	text-align: center;
-	font: 50pt 'Score';
-	color: #fff;
 	transition: .3s ease-in;
+	width: 100%;
+	font: 50pt 'Score';
+	text-align: center;
+	color: #fff;
 }
 
 #scores #highscore {
-	font-size: 25pt;
 	opacity: .5;
+	font-size: 25pt;
 }
 
 #scores.hidden {
-	transform: translateY(-100%);
 	opacity: 0;
+	transform: translateY(-100%);
 }
 
 #scores #coins {
 	position: absolute;
 	top: 0;
 	right: 10px;
-	display: flex;
 	align-items: center;
+	display: flex;
 }
 
 #scores #coins #coin-icon {
 	position: relative;
 	display: inline-block;
+	margin-right: 10px;
 	width: 40px;
 	height: 40px;
-	margin-right: 10px;
 	background: url(../img/sprites/default/coin_1.png) center center / contain no-repeat;
 }
 
 #endgame-screen {
-	z-index: 3;
 	position: fixed;
+	z-index: 3;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -60%);
 	opacity: 0;
-	color: #fff;
-	text-align: center;
+	transform: translate(-50%, -60%);
 	transition: 1s ease;
+	text-align: center;
+	color: #fff;
 }
 #endgame-screen.displayed {
-	transform: translate(-50%, -50%);
 	opacity: 1;
+	transform: translate(-50%, -50%);
 }
 #endgame-screen #endgame-title {
-	font: 140pt 'Main';
 	margin-bottom: -50px;
+	font: 140pt 'Main';
 }
 #endgame-screen #endgame-score {
 	position: relative;
@@ -69,28 +69,28 @@
 	position: absolute;
 	top: 15px;
 	left: 45%;
+	display: none;
 	transform: rotate(15deg);
+	animation: newrecord .25s ease infinite alternate;
 	font: 12pt 'Main';
 	color: red;
-	display: none;
-	animation: newrecord .25s ease infinite alternate;
 }
 #endgame-screen #endgame-score #endgame-newrecord.displayed {
 	display: block;
 }
 
 #endgame-screen #endgame-menu {
-	display: flex;
+	width: 500px;
 	justify-content: space-between;
 	align-items: center;
-	width: 500px;
+	display: flex;
 	margin: 30px auto;
 }
 
 #endgame-screen #endgame-menu .endgame-menu-btn {
-	font-size: 20pt;
 	margin: 0;
 	padding: 0 10px;
+	font-size: 20pt;
 }
 
 

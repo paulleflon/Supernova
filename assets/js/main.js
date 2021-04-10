@@ -14,5 +14,6 @@ const GameAudio = new AudioManager({
 // Ceci permet d'éviter que le navigateur ne bloque les sons dans le menu (https://goo.gl/xX8pDD)
 getId('intro').addEventListener('click', () => {
 	displayMenu();
+	displayInventory();
 	getId('intro').remove();
 });

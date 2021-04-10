@@ -4,8 +4,8 @@
  */
 class Player extends Sprite {
 	/**
-	 * @param {string} skin 
-	 * @param {HTMLDivElement} parent 
+	 * @param {string} skin Le skin à appliquer sur le joueur
+	 * @param {HTMLDivElement} parent L'élément HTML dans lequel afficher le joueur
 	 */
 	constructor(skin, parent) {
 		super({
@@ -23,15 +23,30 @@ class Player extends Sprite {
 			y: 0,
 			debug: false
 		});
-
+		/**
+		 * L'élément HTML dans lequel afficher le joueur
+		 * @type {HTMLElement}
+		 */
 		this.parent = parent;
+		/**
+		 * Si les différentes touches de jeu sont pressées
+		 * @type {Record<string, boolean>}
+		 */
 		this.keyPressed = {
 			up: false,
 			down: false,
 			shift: false
 		};
+		/**
+		 * Le nombre de touches pressées par le joueur durant la partie
+		 * @type {number}
+		 */
 		this.arrowsPressed = 0;
 		this.load();
+		/**
+		 * L'EventHandler à attacher au joueur pour le rendre jouable
+		 * @type {Function}
+		 */
 		this.keyPressHandler = (e) => {
 			const down = e.type === 'keydown';
 			if (!down && (this.keyPressed.down || this.keyPressed.up))
@@ -53,6 +68,9 @@ class Player extends Sprite {
 		}
 	}
 
+	/**
+	 * Affiche le joueur
+	 */
 	display() {
 		this.y = this.parent.offsetHeight / 2 - 50;
 		this.img.classList.add('in');
@@ -62,6 +80,9 @@ class Player extends Sprite {
 		super.display(this.parent);
 	}
 
+	/**
+	 * Met à jour la position et l'affichage du joueur
+	 */
 	update() {
 		let speed = 0;
 		if (this.keyPressed.up)
@@ -77,6 +98,9 @@ class Player extends Sprite {
 		this.img.style.top = `${this.y}px`;
 	}
 
+	/**
+	 * Anime la chute du personnage et le supprime de l'écran lors de la défaite de la partie
+	 */
 	fall() {
 		document.body.removeEventListener('keydown', this.keyPressHandler, true);
 		document.body.removeEventListener('keyup', this.keyPressHandler, true);
