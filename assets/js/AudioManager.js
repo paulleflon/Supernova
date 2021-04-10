@@ -1,3 +1,4 @@
+/* Paul Leflon - Aryelle Pocholle - Chloé Xu - Lévina Sun */
 /**
  * Gère l'audio du jeu
  * @class

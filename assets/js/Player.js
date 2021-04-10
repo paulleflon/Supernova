@@ -1,3 +1,4 @@
+/* Paul Leflon - Aryelle Pocholle - Chloé Xu - Lévina Sun */
 /**
  * Représente un personnage jouable
  * @class

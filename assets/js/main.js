@@ -1,3 +1,4 @@
+/* Paul Leflon - Aryelle Pocholle - Chloé Xu - Lévina Sun */
 const GameAudio = new AudioManager({
 	musics: {
 		main: 'assets/music/main-bgm.mp3',

@@ -1,3 +1,4 @@
+/* Paul Leflon - Aryelle Pocholle - Chloé Xu - Lévina Sun */
 /**
  * Retourne un nombre entier aléatoire	
  * @param {number} a Le minimum

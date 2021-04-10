@@ -1,4 +1,4 @@
-
+/* Paul Leflon - Aryelle Pocholle - Chloé Xu - Lévina Sun */
 /**
  * Représente les statistiques d'une partie de Supernova
  * @class

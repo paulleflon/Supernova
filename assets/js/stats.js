@@ -1,3 +1,4 @@
+/* Paul Leflon - Aryelle Pocholle - Chloé Xu - Lévina Sun */
 const statNames = {
 	'highestScore': 'Meilleur score',
 	'worstScore': 'Pire score',

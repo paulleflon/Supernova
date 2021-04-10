@@ -1,3 +1,4 @@
+/* Paul Leflon - Aryelle Pocholle - Chloé Xu - Lévina Sun */
 // Les noms des skins dans l'ordre du BitField
 const SKIN_NAMES = ['default', 'animalcrossing'];
 const SKIN_DISPLAY_NAMES = ['Skin de base', 'Animal Crossing'];

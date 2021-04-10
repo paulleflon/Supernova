@@ -1,3 +1,4 @@
+/* Paul Leflon - Aryelle Pocholle - Chloé Xu - Lévina Sun */
 const menu = getId('main-menu');
 const bg = getId('menu-background');
 const contents = getId('menu-contents');
