@@ -96,7 +96,7 @@ class Sprite {
 	static testCollision(sprite1, sprite2) {
 		/*
 		 * Pour simplifier le développment, les HitBox ne sont que des rectangles
-		 * À cause de cela dans certains cas les collisions peuvent être 
+		 * À cause de cela dans certains cas les collisions peuvent être hasardeuses
 		 */
 
 		// Si l'un des éléments n'a pas de hitbox, aucune collision ne peut survenir
@@ -125,7 +125,6 @@ class Sprite {
 		/* 3 */ y2 + h2 > y1 && // Côté(2)⬇ en dessous de Côté(1)⬆
 		/* 4 */ y2 < y1 + h1    // Côté(2)⬆ au dessus de Côté(1)⬇
 		);
-		// Voir compte-rendu pour une meilleure explication des conditions
 	}
 
 }
