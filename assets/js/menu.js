@@ -42,6 +42,9 @@ menuItems.forEach(elm => {
 	});
 });
 
+/**
+ * Affiche le menu et joue la musique correspondante
+ */
 function displayMenu() {
 	GameAudio.playMusic('main');
 	switchSection('main-menu');
