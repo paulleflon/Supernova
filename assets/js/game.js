@@ -267,5 +267,4 @@ class Game {
 		localStorage.setItem('balance', balance.toString());
 		GameAudio.playMusic('over');
 	}
-
 }
