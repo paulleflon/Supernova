@@ -66,7 +66,7 @@ class InventoryTile {
 
 	/**
 	 * Les actions à réaliser quand on clique sur une tuile d'inventaire
-	 * @this {InventoryTile} On affecte l'objet InventoryTile cliqué à l'EventListener
+	 * @this {InventoryTile} On affecte l'objet InventoryTile cliqué au this de l'EventListener
 	 */
 	static onClick() {
 		if (this.selected)
