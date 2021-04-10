@@ -57,8 +57,7 @@ class AudioManager {
 	 * @type {?HTMLAudioElement}
 	 */
 	get nowPlaying() {
-		if (this._nowPlaying)
-			return this.musics.get(this._nowPlaying);
+		return this.musics.get(this._nowPlaying);
 	}
 
 	/**
